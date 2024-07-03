@@ -1,9 +1,25 @@
-import express, { type Request, type Response } from "express";
+import express, {
+	type NextFunction,
+	type Request,
+	type Response,
+} from "express";
 
 const app = express();
 const port = 6969;
 
+function logMiddleware() {
+	return (req: Request, res: Response, next: NextFunction) => {
+		const ip = req.ip;
+		const method = req.method;
+		const date = new Date().toISOString();
+		const hostname = req.hostname;
+
+		console.log(`[${date}] ${ip} - ${method} ${req.originalUrl} ${hostname}`);
+		next();
+	};
+}
 app.use(express.json());
+app.use(logMiddleware());
 interface Course {
 	id: number;
 	name: string;
