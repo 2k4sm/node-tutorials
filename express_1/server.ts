@@ -39,6 +39,12 @@ app.put("/courses/:id", (req: Request, res: Response) => {
 	}
 });
 
+app.delete("/courses/:id", (req: Request, res: Response) => {
+	const courseId = parseInt(req.params.id);
+	courses.splice(courseId - 1, 1);
+	res.json(courses);
+});
+
 app.listen(port, () => {
 	console.log(`Server is running on http://localhost:${port}/`);
 });
